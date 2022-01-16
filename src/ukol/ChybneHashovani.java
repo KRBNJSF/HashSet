@@ -1,10 +1,10 @@
 package ukol;
 
-import java.util.Collections;
 import java.util.HashSet;
+import java.util.stream.Collectors;
 
 class Ovoce {
-    public final int cena;
+    private int cena;
     private final String typ;
 
     @Override
@@ -13,6 +13,14 @@ class Ovoce {
                 "cena=" + cena +
                 ", typ='" + typ + '\'' +
                 '}';
+    }
+
+    public int getCena() {
+        return cena;
+    }
+
+    public void setCena(int cena) {
+        this.cena = cena;
     }
 
     public Ovoce(int cena) {
@@ -36,20 +44,18 @@ public class ChybneHashovani {
 
 
         System.out.println("Toto hashovani nefunguje:");
-        Ovoce ovoce = new Ovoce(7);
-        if (ovoce.cena == 7) {
-            System.out.println("ano");
-        }
+
         HashSet<Ovoce> ovoceSet = new HashSet<>();
-        ovoceSet.add(new Ovoce(6));
-        ovoceSet.add(new Ovoce(7));
-
-        if (ovoce.cena == 7) {
-            System.out.println("ano, ano");
+        for (int i = 6; i <= 8; i++) {
+            ovoceSet.add(new Ovoce(i));
         }
 
-
+        int targetPrice = 7;
         System.out.println("ovoceSet: " + ovoceSet);
-        System.out.println("obsahuje 7:" + ovoceSet.contains(new Ovoce(7)));
+        if (ovoceSet.stream().filter(l -> l.getCena() == 7).collect(Collectors.toSet()).isEmpty()) {
+            System.out.println("Neobsahuje 7");
+        } else {
+            System.out.println("Obsahuje 7");
+        }
     }
 }
